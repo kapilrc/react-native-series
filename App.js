@@ -6,6 +6,8 @@ import {
   Button,
 } from 'react-native';
 
+import BluetoothList from './app/bluetooth/containers/bluetooth-list'
+
 const App = () => {
   const [counter, setCounter] = useState(0);
 
@@ -15,9 +17,8 @@ const App = () => {
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>{counter * 5}</Text>
-      <Button title='Add' onPress={onClickHandler}></Button>
-      <Text style={styles.text}>You clicked {counter} times</Text>
+      <BluetoothList />
+
     </View>
   );
 };
@@ -25,9 +26,7 @@ const App = () => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: '#0000ff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 80
   },
   text: {
     color: '#ffffff',
