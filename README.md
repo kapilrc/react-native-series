@@ -6,8 +6,8 @@ $> cd rnbluetoothapp/
 
 $> npx react-native start (to start Metro)
 
-$> bruviti$ npm install --save react-native-ble-plx
+$> npm i --save react-native-ble-manager
 
-$> npx react-native link react-native-ble-plx
+$> npx react-native link react-native-ble-manager
 
 $> cd ios && pod update
