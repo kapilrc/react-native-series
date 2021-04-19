@@ -1,60 +1,86 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react'
+import { Alert, FlatList, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import AddTodo from './src/components/addTodo'
+import Header from './src/components/header'
+import Todoitem from './src/components/todoitem'
 
-export default function App() {
-  const [people, setPeople] = useState([
-    { name: 'Kapil', id: '1' },
-    { name: 'Aniket', id: '2' },
-    { name: 'Rajesh', id: '3' },
-    { name: 'Piyush', id: '4' },
-    { name: 'Kishor', id: '5' },
-    { name: 'Swapnil', id: '6' },
-    { name: 'Zach', id: '7' },
-  ]);
+const App = () => {
 
-  const pressHandler = (id) => {
-    console.log(id);
-    setPeople((prevPeople) => {
-      return prevPeople.filter(person => person.id  != id);
-    });
-  };
+  const [todos, setTodos] = useState([
+    {text: "buy coffee", key: "1"},
+    {text: "create an app", key: "2"},
+    {text: "take rest", key: "3"},
+  ])
+
+  const pressHandler = key => {
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.key != key)
+    })
+  }
+
+  const submitHandler = text => {
+
+    if(text.length < 4) {
+      Alert.alert('OOPS', 'Todo must be over 3 chars long',
+        [
+          {text: 'OK', onPress: () => (console.log('alert closed'))}
+        ]
+      )
+      return;
+    }
+
+    let isTextExist = todos.find(todo => todo.text.toLowerCase() == text.toLowerCase())
+    if(isTextExist){
+      console.warn("item is already in todo list");
+      return;
+    }
+
+    setTodos(prevTodos => {
+
+      return [
+        {
+          text,
+          key: (prevTodos.length+2).toString()
+        },
+        ...prevTodos
+      ]
+    })
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tap to delete "Touchable Component"</Text>
-      <FlatList 
-        numColumns={1}
-        keyExtractor={(item) => item.id} 
-        data={people} 
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => pressHandler(item.id)}>
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-
-    </View>
-  );
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+    }}>
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
+          <AddTodo placeholder="new tod ..." submitHandler={submitHandler} />
+          <View style={styles.list}>
+            <FlatList 
+              data={todos}
+              renderItem={({item}) => (
+                <Todoitem item={item} pressHandler={pressHandler} />
+              )}
+            />
+          </View>
+        </View>
+        
+      </View>
+    </TouchableWithoutFeedback>
+  )
 }
+
+export default App
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff'
+    backgroundColor: '#eaeaea'
   },
-  title: {
-    fontSize: 20,
-    textAlign: 'center'
+  content: {
+    padding: 20,
   },
-  item: {
-    flex: 1,
-    marginHorizontal: 10,
-    marginTop: 20,
-    padding: 15,
-    backgroundColor: 'pink',
-    fontSize: 24,
-    width: '100%'
-  },
-});
+  list: {
+    marginTop: 10
+  }
+})
