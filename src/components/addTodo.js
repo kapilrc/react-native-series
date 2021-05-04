@@ -9,13 +9,13 @@ const AddTodo = ({placeholder, submitHandler}) => {
   }
 
   return (
-    <View style={styles.input}>
-      <TextInput
+    <>
+      <TextInput style={styles.input}
         placeholder={placeholder}
         onChangeText={changeHandler}
       />
       <Button style={styles.button} onPress={() => submitHandler(text)} title="Add" color='coral' />
-    </View>
+    </>
   )
 }
 

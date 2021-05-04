@@ -10,6 +10,7 @@ const App = () => {
     {text: "buy coffee", key: "1"},
     {text: "create an app", key: "2"},
     {text: "take rest", key: "3"},
+    {text: "do yoga", key: "4"}
   ])
 
   const pressHandler = key => {
@@ -54,7 +55,7 @@ const App = () => {
       <View style={styles.container}>
         <Header />
         <View style={styles.content}>
-          <AddTodo placeholder="new tod ..." submitHandler={submitHandler} />
+          <AddTodo placeholder="new todo ..." submitHandler={submitHandler} />
           <View style={styles.list}>
             <FlatList 
               data={todos}
@@ -78,9 +79,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#eaeaea'
   },
   content: {
-    padding: 20,
+    flex: 1,
+    padding: 30,
   },
   list: {
-    marginTop: 10
+    flex: 1,
+    marginTop: 20,
   }
 })
